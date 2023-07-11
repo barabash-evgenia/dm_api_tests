@@ -1,19 +1,28 @@
 import requests
-import json
 
-url = "http://localhost:5051/v1/account/login"
 
-payload = json.dumps({
-  "login": "login_114",
-  "password": "login_114",
-  "rememberMe": False
-})
-headers = {
-  'X-Dm-Bb-Render-Mode': '',
-  'Content-Type': 'application/json',
-  'Accept': 'text/plain'
-}
+def post_v1_account_login():
+    """
+    Authenticate via credentials
+    :return:
+    """
+    url = "http://localhost:5051/v1/account/login"
 
-response = requests.request("POST", url, headers=headers, data=payload)
+    payload = {
+        "login": "login_114",
+        "password": "login_114",
+        "rememberMe": False
+    }
+    headers = {
+        'X-Dm-Bb-Render-Mode': '',
+        'Content-Type': 'application/json',
+        'Accept': 'text/plain'
+    }
 
-print(response.text)
+    response = requests.request(
+        method="POST",
+        url=url,
+        headers=headers,
+        json=payload
+    )
+    return response
