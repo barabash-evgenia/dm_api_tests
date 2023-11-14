@@ -1,5 +1,6 @@
 from services.dm_api_account import DmApiAccount
 import structlog
+from services.mailhog import MailhogApi
 
 structlog.configure(
     processors=[
@@ -9,8 +10,8 @@ structlog.configure(
 
 
 def test_put_v1_account_token():
+    mailhog = MailhogApi(host='http://localhost:5025')
     api = DmApiAccount(host='http://localhost:5051')
-    response = api.account.put_v1_account_token(
-        '0c49543a-a80e-4a39-8019-6b3d8f5a34f1'
-    )
-    print(response)
+    token = mailhog.get_token_from_last_email()
+    response = api.account.put_v1_account_token(token=token)
+    assert response.status_code == 200, f'Статус код ответа должен быть равен 200, но он равен {response.status_code}'
