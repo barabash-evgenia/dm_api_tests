@@ -1,8 +1,14 @@
-from pydantic import BaseModel, StrictStr, StrictBool, Field
+from __future__ import annotations
+
+from typing import Optional
+
+from pydantic import BaseModel, Extra, Field, StrictStr
 
 
-class LoginCredentialsModel(BaseModel):
-    login: StrictStr
-    password: StrictStr
-    # remember_me: StrictBool = Field(alias="rememberMe")
-    remember_me: StrictBool
+class LoginCredentials(BaseModel):
+    class Config:
+        extra = Extra.forbid
+
+    login: Optional[StrictStr] = None
+    password: Optional[StrictStr] = None
+    remember_me: Optional[bool] = Field(None, alias='rememberMe')
