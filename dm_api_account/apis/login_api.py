@@ -25,8 +25,8 @@ class LoginApi:
             **kwargs
         )
         validate_status_code(response, status_code)
-        if status_code == 200:
-            return UserEnvelope(**response.json())
+        # if status_code == 200:
+        #     return UserEnvelope(**response.json())
         return response
 
     def delete_v1_account_login(self, status_code: int = 204, **kwargs) -> Response | GeneralError:
