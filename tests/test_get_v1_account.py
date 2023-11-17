@@ -17,6 +17,5 @@ def test_get_v1_account():
     token = api.login.get_auth_token(login=login, password=password)
     api.account.set_headers(headers=token)
     api.login.set_headers(headers=token)
-    # api.account.get_current_user_info(headers=token)
     api.account.get_current_user_info()
     api.login.logout_user()

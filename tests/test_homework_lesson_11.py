@@ -36,12 +36,18 @@ def test_post_v1_account():
         assert row['Login'] == login, f'User {login} not registered'
         assert row['Activated'] is False, f'User {login} is activated'
 
+    # Activate registered user in Database
+
+    db.activate_user_by_login(login=login)
+    dataset = db.get_user_by_login(login=login)
+    for row in dataset:
+        assert row['Login'] == login, f'User {login} not registered'
+        assert row['Activated'] is True, f'User {login} is activated'
+
     # Activate registered user
-    response = api.account.activate_registered_user(login=login)
+    api.account.activate_registered_user(login=login)
     time.sleep(2)
     dataset = db.get_user_by_login(login=login)
     for row in dataset:
         assert row['Activated'] is True, f'User {login} is not activated'
 
-    # Login user
-    api.login.login_user(login=login, password=password)
